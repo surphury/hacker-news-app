@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 import jotaiDebugLabel from 'jotai/babel/plugin-debug-label';
 import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh';
 
-import * as path from 'path';
+import * as path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({

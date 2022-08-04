@@ -1,11 +1,17 @@
+import styled from 'styled-components';
+
+import { StyledHeader } from '@/styled-components';
+
+const StyledTitle = styled.h1`
+	text-transform: uppercase;
+	display: grid;
+	justify-content: center;
+`;
+
 export function Header() {
 	return (
-		<header>
-			<nav>
-				<ul>
-					<li></li>
-				</ul>
-			</nav>
-		</header>
+		<StyledHeader>
+			<StyledTitle>Hacker News</StyledTitle>
+		</StyledHeader>
 	);
 }

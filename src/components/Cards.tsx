@@ -11,6 +11,6 @@ const CardsContainer = styled.div`
 	min-height: 100vh;
 `;
 
-export function Cards({ children }: { children: ReactNode[] | ReactNode }) {
+export function Cards({ children }: { children: ReactNode }) {
 	return <CardsContainer>{children}</CardsContainer>;
 }

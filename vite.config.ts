@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 import react from '@vitejs/plugin-react';
 
@@ -12,11 +12,9 @@ export default defineConfig({
 	plugins: [
 		react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } })
 	],
-
 	define: {
 		'process.env': {}
 	},
-
 	resolve: {
 		alias: [
 			{ find: '@', replacement: path.resolve(__dirname, 'src') },
@@ -25,5 +23,10 @@ export default defineConfig({
 				replacement: './runtimeConfig.browser'
 			}
 		]
+	},
+	test: {
+		globals: true,
+		environment: 'jsdom',
+		setupFiles: './src/test/setup.ts'
 	}
 });

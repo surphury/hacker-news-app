@@ -57,16 +57,24 @@ const options = [
 	}
 ];
 
-const Main = styled.div`
+const Main = styled.main`
 	display: grid;
 	justify-content: center;
-	margin-bottom: 2em;
+	row-gap: 2em;
+`;
+
+export const StyledPageTitle = styled.h1`
+	text-transform: uppercase;
+	display: grid;
+	justify-content: center;
 `;
 
 export function Layout() {
 	return (
 		<>
-			<Header />
+			<Header>
+				<StyledPageTitle>Hacker News</StyledPageTitle>
+			</Header>
 			<Main>
 				<StyledNavbar>
 					<StyledList>
@@ -81,12 +89,12 @@ export function Layout() {
 					</StyledList>
 				</StyledNavbar>
 				<Select options={options} />
+				<Routes>
+					<Route path={Routing.Home} element={<Posts />} />
+					<Route path={Routing.Favorites} element={<Favorites />} />
+					<Route path={Routing.Page} element={<Posts />} />
+				</Routes>
 			</Main>
-			<Routes>
-				<Route path={Routing.Home} element={<Posts />} />
-				<Route path={Routing.Favorites} element={<Favorites />} />
-				<Route path={Routing.Page} element={<Posts />} />
-			</Routes>
 		</>
 	);
 }

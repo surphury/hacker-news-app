@@ -1,17 +1,7 @@
-import styled from 'styled-components';
+import { ReactNode } from 'react';
 
 import { StyledHeader } from '@/styled-components';
 
-const StyledTitle = styled.h1`
-	text-transform: uppercase;
-	display: grid;
-	justify-content: center;
-`;
-
-export function Header() {
-	return (
-		<StyledHeader>
-			<StyledTitle>Hacker News</StyledTitle>
-		</StyledHeader>
-	);
+export function Header({ children }: { children: ReactNode }) {
+	return <StyledHeader>{children}</StyledHeader>;
 }

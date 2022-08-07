@@ -5,3 +5,4 @@ export { StyledCardDetails } from './StyledCardDetails';
 export { StyledOption } from './StyledOption';
 export { StyledSelectButton } from './StyledSelectButton';
 export { StyledOptionsContainer } from './StyledOptionsContainer';
+export { StyledPageTitle } from './StyledPageTitle';

@@ -10,14 +10,14 @@ import { Option } from '@/models';
 
 import { Post } from '@/config';
 
-import { PostsState } from '@/state';
+import { topicState } from '@/state';
 
 import {
 	StyledOptionsContainer,
 	StyledSelectButton
 } from '@/styled-components';
 
-const Container = styled.nav`
+const Container = styled.div`
 	display: grid;
 	max-width: 20ch;
 	position: relative;
@@ -25,44 +25,41 @@ const Container = styled.nav`
 `;
 
 export function Select({ options }: { options: Option<Post>[] }) {
-	const [posts, setPosts] = useAtom(PostsState);
+	const [topic, setTopic] = useAtom(topicState);
 
 	const [selected, setSelected] = useState<Option<Post>>(
-		options.filter((option) => option.value === posts)[0]
+		options.filter((option) => option.value === topic)[0]
 	);
+	const [drop, setDrop] = useState(false);
 
 	const onSelect = (index: number) => {
 		setSelected(options[index]);
-		setPosts(options[index].value);
+		setTopic(options[index].value);
 	};
-
-	const [drop, setDrop] = useState(false);
 
 	return (
 		<Container>
-			<>
-				<StyledSelectButton
-					onClick={() => setDrop((drop) => !drop)}
-					tabIndex={0}
-					type="button"
-				>
-					<Opt icon={selected.icon}>{selected.text}</Opt>
-					<Icon icon={arrow} />
-				</StyledSelectButton>
-				<StyledOptionsContainer>
-					{drop &&
-						options.map(({ text, icon }, index) => (
-							<Opt
-								index={index}
-								key={text}
-								onSelect={onSelect}
-								icon={icon}
-							>
-								{text}
-							</Opt>
-						))}
-				</StyledOptionsContainer>
-			</>
+			<StyledSelectButton
+				onClick={() => setDrop((drop) => !drop)}
+				tabIndex={0}
+				type="button"
+			>
+				<Opt icon={selected.icon}>{selected.text}</Opt>
+				<Icon icon={arrow} />
+			</StyledSelectButton>
+			<StyledOptionsContainer>
+				{drop &&
+					options.map(({ text, icon }, index) => (
+						<Opt
+							index={index}
+							key={text}
+							onSelect={onSelect}
+							icon={icon}
+						>
+							{text}
+						</Opt>
+					))}
+			</StyledOptionsContainer>
 		</Container>
 	);
 }

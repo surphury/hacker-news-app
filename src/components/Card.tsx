@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { useAtom } from 'jotai';
 import * as timeago from 'timeago.js';
 import styled from 'styled-components';
@@ -41,6 +42,26 @@ export function Card({
 }: New) {
 	const [favorites, setFavorites] = useAtom(favoritesState);
 
+	const onLike = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		if (favorite) {
+			setFavorites(
+				favorites.filter((fav) => fav.created_at_i !== created_at_i)
+			);
+		} else {
+			setFavorites([
+				...favorites,
+				{
+					author,
+					created_at_i,
+					created_at,
+					story_title,
+					story_url
+				}
+			]);
+		}
+	};
+
 	const favorite = favorites
 		.map((fav) => fav.created_at_i)
 		.includes(created_at_i);
@@ -55,29 +76,7 @@ export function Card({
 					</StyledCardDetails>
 					<StyledCardTitle>{story_title}</StyledCardTitle>
 				</Container>
-				<LikeButton
-					onClick={(event) => {
-						event.preventDefault();
-						if (favorite) {
-							setFavorites(
-								favorites.filter(
-									(fav) => fav.created_at_i !== created_at_i
-								)
-							);
-						} else {
-							setFavorites([
-								...favorites,
-								{
-									author,
-									created_at_i,
-									created_at,
-									story_title,
-									story_url
-								}
-							]);
-						}
-					}}
-				>
+				<LikeButton onClick={onLike}>
 					<Icon icon={favorite ? solidHeart : heart} />
 				</LikeButton>
 			</StyledCard>

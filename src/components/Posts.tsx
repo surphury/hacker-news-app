@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Cards, Card } from '@/components';
 
-import { newsLoadable, PostsState } from '@/state';
+import { newsLoadable, topicState } from '@/state';
 
 import { useNearScreen } from '@/hooks';
 
@@ -18,20 +18,21 @@ export function Posts() {
 
 	const navigate = useNavigate();
 
-	const [posts] = useAtom(PostsState);
+	const [topic] = useAtom(topicState);
 
 	const [extraPosts, setExtraPosts] = useState<New[]>([]);
 
 	const observedElement = useRef<HTMLDivElement>(null);
 
-	const { fromRef, isNearScreen } = useNearScreen({
+	const { isNearScreen } = useNearScreen({
 		externalRef: observedElement,
 		once: false
 	});
 
 	useEffect(() => {
 		setPage(1);
-	}, [posts]);
+		setExtraPosts([]);
+	}, [topic]);
 
 	const { pageNumber } = useParams();
 
@@ -39,7 +40,7 @@ export function Posts() {
 
 	const debounceHandleNextPage = useCallback(
 		debounce(() => {
-			getNews(posts, page).then((res) => {
+			getNews(topic, page).then((res) => {
 				setPage((page) => page + 1);
 
 				setExtraPosts((oldPosts) => [...oldPosts, ...res.posts]);
@@ -47,12 +48,12 @@ export function Posts() {
 				navigate(`/page/${page}`, { replace: true });
 			});
 		}, 2000),
-		[page, posts]
+		[page, topic]
 	);
 
 	useEffect(() => {
 		if (isNearScreen) debounceHandleNextPage();
-	}, [debounceHandleNextPage, isNearScreen]);
+	}, [isNearScreen]);
 
 	if (news.state === 'hasError') {
 		return <div>Error getting data</div>;
